@@ -10,6 +10,17 @@ public class Movie {
 	private String director;
 	private int year;
 	
+	public Movie() {
+		
+	}
+	public  Movie(String name,String director, int year) {
+		
+		this.name=name;
+		this.director=director;
+		this.year=year;
+		
+	}
+	
 	
 	@XmlElement
 	public String getName() {

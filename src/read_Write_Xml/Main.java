@@ -2,6 +2,8 @@ package read_Write_Xml;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -12,17 +14,23 @@ public class Main {
 
 	public static void main(String[] args) throws JAXBException {
 		// TODO Auto-generated method stub
-		Movie movie=new Movie();
-		movie.setName("Aladdin");
-		movie.setDirector("Guy Ritchie");
-		movie.setYear(2019);
+		List<Movie> movies =new ArrayList<>();
+		
+		movies.add(new Movie("Aladdin","Guy Ritchie",2019));
+		movies.add(new Movie("Avatar","James Cameron",2010));
+		movies.add(new Movie("Frozen","Jennifer Lee",2013));
+		
+		Movie_List ml=new Movie_List();
+		ml.setMovies(movies);
+
+		
 		
 		//marshall
-		JAXBContext context=JAXBContext.newInstance(Movie.class);
+		JAXBContext context=JAXBContext.newInstance(Movie_List.class);
 		Marshaller marshaller =context.createMarshaller();
 		
 		StringWriter writer=new StringWriter();
-		marshaller.marshal(movie, writer);
+		marshaller.marshal(ml, writer);
 		
 		String xml=writer.toString();
 		
@@ -33,11 +41,16 @@ public class Main {
 		//unmarshall
 		Unmarshaller unmarshaller =context.createUnmarshaller();
 		
-		Movie unmarshalledmovie =(Movie) unmarshaller.unmarshal(new StringReader(xml));
+		Movie_List unmarshalledmovie =(Movie_List) unmarshaller.unmarshal(new StringReader(xml));
 		
-		System.out.println(unmarshalledmovie.getName());
-		System.out.println(unmarshalledmovie.getDirector());
-		System.out.println(unmarshalledmovie.getYear());
+		for(Movie movie:unmarshalledmovie.getMovies()) {
+			
+			System.out.println(movie.getName());
+			System.out.println(movie.getDirector());
+			System.out.println(movie.getYear());
+			
+		}
+		
 
 		
 		
